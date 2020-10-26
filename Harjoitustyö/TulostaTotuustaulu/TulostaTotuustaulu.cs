@@ -2,6 +2,9 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using System.CodeDom;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 /// @author toloojxz
 /// @version 15.10.2020
@@ -19,9 +22,8 @@ public class TulostaTotuustaulu
 
         string formatoituLauseke = Prosessoi(userInput);
 
-        // short vastaava = VastaavaNumero(laskettuBool);
-
-        // TulostaTaulukko(vastaava);
+        string[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
+        List<bool> kombinaatiot = BoolKombinaatiot(muuttujat);
     }
 
 
@@ -49,9 +51,46 @@ public class TulostaTotuustaulu
             }
         }
 
-        formatoitava.Replace("NOT", "!").Replace("AND", "&&").Replace("OR", "||");
+        TarkistaSulut(formatoitava);
 
-        Console.WriteLine(formatoitava);
-        return "";
+        return formatoitava
+            .Replace("NOT", "!")
+            .Replace("AND", "&&")
+            .Replace("OR", "||")
+            .ToString()
+            .Trim();
+    }
+
+    public static void TarkistaSulut(StringBuilder tarkistettava)
+    {
+        int montako = 0;
+        for (i = 0; i < tarkistettava.Length; i++)
+        {
+            switch (tarkistettava[i])
+            {
+                case '(':
+                    montako++;
+                    break;
+
+                case ')':
+                    montako++;
+                    break;
+            }
+        }
+
+        if (montako % 2 != 0) Console.WriteLine("Tarkista sulut!");
+    }
+
+    public static string[] ErotteleMuuttujat(string lauseke)
+    {
+        Regex aakkoset = new Regex(@"[a-z]");
+        MatchCollection matches = alphabet.Matches(aakkoset);
+        var uusihomma = matches.Select(m => m.Groups[0].Value).ToArray();
+        return uusihomma;
+    }
+
+    public static List<bool> BoolKombinaatiot(string[] lista)
+    {
+        return null;
     }
 }
