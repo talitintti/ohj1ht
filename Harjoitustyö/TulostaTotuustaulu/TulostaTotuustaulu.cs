@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 /// @author toloojxz
-/// @version 15.10.2020
+/// @version 28.10.2020
 /// <summary>
 /// Käyttäjä syöttää haluamansa boolen sääntöjen mukaisen lausekkeen
 /// ja ohjelma tulostaa sitä vastaavan totuustaulun  
@@ -23,7 +23,7 @@ public class TulostaTotuustaulu
         string formatoituLauseke = Prosessoi(userInput);
 
         string[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
-        List<bool> kombinaatiot = BoolKombinaatiot(muuttujat);
+        bool[,] kombinaatiot = BoolKombinaatiot(muuttujat);
     }
 
 
@@ -81,15 +81,25 @@ public class TulostaTotuustaulu
         if (montako % 2 != 0) Console.WriteLine("Tarkista sulut!");
     }
 
+    /// <summary>
+    /// Palauttaa annetusta lausekkeesta taulukon, jossa on lausekkeen muuttujat
+    /// </summary>
+    /// <param name="lauseke"></param>
+    /// <returns></returns>
     public static string[] ErotteleMuuttujat(string lauseke)
     {
         Regex aakkoset = new Regex(@"[a-z]");
         MatchCollection matches = alphabet.Matches(aakkoset);
-        var uusihomma = matches.Select(m => m.Groups[0].Value).ToArray();
-        return uusihomma;
+        var muuttujat = matches.Select(m => m.Groups[0].Value).ToArray();
+        return muuttujat;
     }
 
-    public static List<bool> BoolKombinaatiot(string[] lista)
+    /// <summary>
+    /// Ottaa listan muuttujia ja palauttaa niiden kaikki kombinaatiot 
+    /// </summary>
+    /// <param name="lista"></param>
+    /// <returns></returns>
+    public static bool[,] BoolKombinaatiot(string[] lista)
     {
         return null;
     }
