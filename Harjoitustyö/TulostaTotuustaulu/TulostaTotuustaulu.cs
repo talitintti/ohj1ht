@@ -66,7 +66,7 @@ public class TulostaTotuustaulu
     public static void TarkistaSulut(StringBuilder tarkistettava)
     {
         int montako = 0;
-        for (i = 0; i < tarkistettava.Length; i++)
+        for (int i = 0; i < tarkistettava.Length; i++)
         {
             switch (tarkistettava[i])
             {
