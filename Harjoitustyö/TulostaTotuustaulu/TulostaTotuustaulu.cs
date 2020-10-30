@@ -91,7 +91,7 @@ public class TulostaTotuustaulu
     public static string[] ErotteleMuuttujat(string lauseke)
     {
         Regex aakkoset = new Regex(@"[a-z]");
-        MatchCollection matches = alphabet.Matches(aakkoset);
+        MatchCollection matches = aakkoset.Matches(lauseke);
         var muuttujat = matches.Select(m => m.Groups[0].Value).ToArray();
         return muuttujat;
     }
