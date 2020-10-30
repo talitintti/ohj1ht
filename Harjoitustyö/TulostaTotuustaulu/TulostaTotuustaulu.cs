@@ -24,6 +24,8 @@ public class TulostaTotuustaulu
 
         string[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
         bool[,] kombinaatiot = BoolKombinaatiot(muuttujat);
+        
+        
     }
 
 
@@ -101,6 +103,7 @@ public class TulostaTotuustaulu
     /// <returns></returns>
     public static bool[,] BoolKombinaatiot(string[] lista)
     {
+        //TODO: rekursion ja heapin algoritmin avulla luo permutaatiot
         return null;
     }
 }
