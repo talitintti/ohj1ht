@@ -90,9 +90,10 @@ public class TulostaTotuustaulu
     /// <returns></returns>
     public static string[] ErotteleMuuttujat(string lauseke)
     {
-        Regex aakkoset = new Regex(@"[a-z]");
-        MatchCollection matches = aakkoset.Matches(lauseke);
-        var muuttujat = matches.Select(m => m.Groups[0].Value).ToArray();
+        List<string> muuttujat = new List<string>();
+        string aakkoset =  @"[a-z]";
+        MatchCollection loydetut = Regex.Matches(lauseke,aakkoset);
+        foreach (Match osuma in loydetut) muuttujat.Add(osuma.ToString()); //muuta lambda-lausekkeeksi
         return muuttujat;
     }
 
