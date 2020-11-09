@@ -22,10 +22,10 @@ public class TulostaTotuustaulu
 
         string formatoituLauseke = Prosessoi(userInput);
 
-        string[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
-        bool[,] kombinaatiot = BoolKombinaatiot(muuttujat);
-        
-        
+        char[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
+        muuttujat = BoolKombinaatiot(muuttujat);
+
+        Console.WriteLine(formatoituLauseke); 
     }
 
 
@@ -43,10 +43,12 @@ public class TulostaTotuustaulu
             switch (formatoitava[i])
             {
                 case '&':
+                    if (formatoitava[i] == formatoitava[++i]) break;
                     formatoitava.Insert(i, '&');
                     i++;
                     break;
                 case '|':
+                    if (formatoitava[i] == formatoitava[++i]) break;
                     formatoitava.Insert(i, '|');
                     i++;
                     break;
@@ -65,22 +67,23 @@ public class TulostaTotuustaulu
 
     public static void TarkistaSulut(StringBuilder tarkistettava)
     {
-        int montako = 0;
+        int montako1 = 0;
+        int montako2 = 0;
         for (int i = 0; i < tarkistettava.Length; i++)
         {
             switch (tarkistettava[i])
             {
                 case '(':
-                    montako++;
+                    montako1++;
                     break;
 
                 case ')':
-                    montako++;
+                    montako2++;
                     break;
             }
         }
 
-        if (montako % 2 != 0) Console.WriteLine("Tarkista sulut!");
+        if (montako1 != montako2) Console.WriteLine("Tarkista sulut!");
     }
 
     /// <summary>
@@ -88,12 +91,12 @@ public class TulostaTotuustaulu
     /// </summary>
     /// <param name="lauseke"></param>
     /// <returns></returns>
-    public static string[] ErotteleMuuttujat(string lauseke)
-    {
-        List<string> muuttujat = new List<string>();
+    public static char[] ErotteleMuuttujat(string lauseke)
+    { 
         string aakkoset =  @"[a-z]";
         MatchCollection loydetut = Regex.Matches(lauseke,aakkoset);
-        foreach (Match osuma in loydetut) muuttujat.Add(osuma.ToString()); //muuta lambda-lausekkeeksi
+        char[] muuttujat = new char[loydetut.Count];
+        for (int i = 0; i < muuttujat.Length; i++) muuttujat[i] = Convert.ToChar(loydetut[i]);
         return muuttujat;
     }
 
@@ -102,9 +105,25 @@ public class TulostaTotuustaulu
     /// </summary>
     /// <param name="lista"></param>
     /// <returns></returns>
-    public static bool[,] BoolKombinaatiot(string[] lista)
+    public static char[,] BoolKombinaatiot(char[] lista)
     {
-        //TODO: rekursion ja heapin algoritmin avulla luo permutaatiot
-        return null;
+        if (lista.Length == 1) return ;
+        int listanPituus = lista.Length;
+        string[,] palautettava = new string[Kertoma(listanPituus+1),listanPituus];
+        
+    }
+
+    /// <summary>
+    /// Laskee annetun kokonaisluvun kertoman
+    /// </summary>
+    /// <param name="num"></param>
+    /// <returns></returns>
+    public static int Kertoma(int num)
+    {
+        int numero = num;
+        while (numero > 0) numero *= --numero;
+        return numero;
     }
 }
+
+ 
