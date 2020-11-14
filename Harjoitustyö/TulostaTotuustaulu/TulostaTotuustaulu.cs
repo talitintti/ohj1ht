@@ -23,7 +23,7 @@ public class TulostaTotuustaulu
         string formatoituLauseke = Prosessoi(userInput);
 
         char[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
-        muuttujat = BoolKombinaatiot(muuttujat);
+        //muuttujat = BoolKombinaatiot(muuttujat);
 
         Console.WriteLine(formatoituLauseke);
     }
@@ -116,9 +116,10 @@ public class TulostaTotuustaulu
     /// <returns></returns>
     public static char[,] BoolKombinaatiot(char[] lista)
     {
-        if (lista.Length == 1) return;
+        if (lista.Length == 1) return lista;
         int listanPituus = lista.Length;
-        string[,] palautettava = new string[Kertoma(listanPituus + 1), listanPituus];
+        string[,] palautettava = new string[Kertoma(listanPituus), listanPituus];
+        return null;
     }
 
     /// <summary>
@@ -133,12 +134,12 @@ public class TulostaTotuustaulu
     /// Kertoma(4) === 24;
     /// </pre>
     /// </example>
-    /// <param name="n"></param>
+    /// <param name="num"></param>
     /// <returns></returns>
     public static int Kertoma(int num)
     {
-        int numero = num;
-        while (numero > 0) numero *= --numero;
-        return numero;
+        int tulos = num;
+        for (int i = num - 1; i > 0; i--) tulos *= i;
+        return tulos;
     }
 }
