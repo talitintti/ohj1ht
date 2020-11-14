@@ -135,7 +135,7 @@ public class TulostaTotuustaulu
     /// </pre>
     /// </example>
     /// <param name="num"></param>
-    /// <returns></returns>
+    /// <returns>Kertoman tulos</returns>
     public static int Kertoma(int num)
     {
         int tulos = num;
