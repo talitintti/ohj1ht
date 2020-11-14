@@ -25,13 +25,22 @@ public class TulostaTotuustaulu
         char[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
         muuttujat = BoolKombinaatiot(muuttujat);
 
-        Console.WriteLine(formatoituLauseke); 
+        Console.WriteLine(formatoituLauseke);
     }
 
 
     /// <summary>
     /// Muuttaa käyttäjän antaman lausekkeen suoraan koodille annettavaksi lausekkeeksi
     /// </summary>
+    /// <example>
+    /// <pre name="test">
+    /// Prosessoi("a && b") === "a && b";
+    /// Prosessoi("a || b") === "a || b";
+    /// Prosessoi("a & b") === "a && b";
+    /// Prosessoi("a | b") === "a || b";
+    /// Prosessoi("a && b !(c) NOT(c &&b)") === "a && b !(c) !(c &&b)";
+    /// </pre>
+    /// </example>
     /// <param name="userInput"></param>
     /// <returns></returns>
     public static string Prosessoi(string userInput)
@@ -92,9 +101,9 @@ public class TulostaTotuustaulu
     /// <param name="lauseke"></param>
     /// <returns></returns>
     public static char[] ErotteleMuuttujat(string lauseke)
-    { 
-        string aakkoset =  @"[a-z]";
-        MatchCollection loydetut = Regex.Matches(lauseke,aakkoset);
+    {
+        string aakkoset = @"[a-z]";
+        MatchCollection loydetut = Regex.Matches(lauseke, aakkoset);
         char[] muuttujat = new char[loydetut.Count];
         for (int i = 0; i < muuttujat.Length; i++) muuttujat[i] = Convert.ToChar(loydetut[i]);
         return muuttujat;
@@ -107,16 +116,24 @@ public class TulostaTotuustaulu
     /// <returns></returns>
     public static char[,] BoolKombinaatiot(char[] lista)
     {
-        if (lista.Length == 1) return ;
+        if (lista.Length == 1) return;
         int listanPituus = lista.Length;
-        string[,] palautettava = new string[Kertoma(listanPituus+1),listanPituus];
-        
+        string[,] palautettava = new string[Kertoma(listanPituus + 1), listanPituus];
     }
 
     /// <summary>
-    /// Laskee annetun kokonaisluvun kertoman
+    /// Antaa annetun kokonaisluvun kertoman
     /// </summary>
-    /// <param name="num"></param>
+    /// <example>
+    /// <pre name="test">
+    /// Kertoma(0) === 0;
+    /// Kertoma(1) === 1;
+    /// Kertoma(2) === 2;
+    /// Kertoma(3) === 6;
+    /// Kertoma(4) === 24;
+    /// </pre>
+    /// </example>
+    /// <param name="n"></param>
     /// <returns></returns>
     public static int Kertoma(int num)
     {
@@ -125,5 +142,3 @@ public class TulostaTotuustaulu
         return numero;
     }
 }
-
- 
