@@ -6,9 +6,6 @@
     <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="Harjoitustyö.sln" t="IncludeFlat" />
-      <e p="TestBench" t="IncludeRecursive">
-        <e p="TestBench.csproj" t="IncludeRecursive" />
-      </e>
       <e p="TulostaTotuustaulu" t="IncludeRecursive">
         <e p="TulostaTotuustaulu.cs" t="Include" />
         <e p="TulostaTotuustaulu.csproj" t="IncludeRecursive" />

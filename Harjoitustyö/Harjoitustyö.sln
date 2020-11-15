@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TulostaTotuustaulu", "TulostaTotuustaulu\TulostaTotuustaulu.csproj", "{E19347BD-7112-4574-BAE9-0E2DEC91CAE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBench", "TestBench\TestBench.csproj", "{3F0F3603-250F-43F6-9606-6B3D21AE7764}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{E19347BD-7112-4574-BAE9-0E2DEC91CAE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E19347BD-7112-4574-BAE9-0E2DEC91CAE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E19347BD-7112-4574-BAE9-0E2DEC91CAE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F0F3603-250F-43F6-9606-6B3D21AE7764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F0F3603-250F-43F6-9606-6B3D21AE7764}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F0F3603-250F-43F6-9606-6B3D21AE7764}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F0F3603-250F-43F6-9606-6B3D21AE7764}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

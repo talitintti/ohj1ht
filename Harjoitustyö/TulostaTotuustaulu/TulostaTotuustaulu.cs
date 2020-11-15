@@ -25,7 +25,9 @@ public class TulostaTotuustaulu
         char[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
         //muuttujat = BoolKombinaatiot(muuttujat);
 
-        Console.WriteLine(formatoituLauseke);
+        //Console.WriteLine(formatoituLauseke);
+        
+        
     }
 
 
@@ -142,4 +144,6 @@ public class TulostaTotuustaulu
         for (int i = num - 1; i > 0; i--) tulos *= i;
         return tulos;
     }
+    
+    
 }
