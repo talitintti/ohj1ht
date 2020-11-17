@@ -23,11 +23,9 @@ public class TulostaTotuustaulu
         string formatoituLauseke = Prosessoi(userInput);
 
         char[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
-        //muuttujat = BoolKombinaatiot(muuttujat);
+        int[,] kombiTaulukko = BoolKombinaatiot(muuttujat);
 
         //Console.WriteLine(formatoituLauseke);
-        
-        
     }
 
 
@@ -116,12 +114,40 @@ public class TulostaTotuustaulu
     /// </summary>
     /// <param name="lista"></param>
     /// <returns></returns>
-    public static char[,] BoolKombinaatiot(char[] lista)
+    public static int[,] BoolKombinaatiot(char[] lista)
     {
-        if (lista.Length == 1) return lista;
-        int listanPituus = lista.Length;
-        string[,] palautettava = new string[Kertoma(listanPituus), listanPituus];
-        return null;
+        int dimMaara0 = Convert.ToInt16(Math.Pow(2, lista.Length));
+        int[,] binComb = new int[dimMaara0, lista.Length];
+
+        for (int x = 0; x < lista.Length; x++)
+        {
+            double kerroin = 1 / Math.Pow(2, x + 1);
+            double kierrosVakio = kerroin * dimMaara0;
+
+
+            int n = 1;
+            for (double inLoop = Math.Pow(2, x); inLoop > 0; inLoop--)
+            {
+                double y = kierrosVakio * n;
+                double endPoint = kierrosVakio * (n + 1);
+                while (y < endPoint)
+                {
+                    binComb[(int) y, x] = 1;
+                    y++;
+                }
+
+                n += 2;
+            }
+
+            return binComb;
+        }
+
+        for (int y = 0; y < binComb.GetLength(0); y++)
+        for (int x = 0; x < binComb.GetLength(1); x++)
+        {
+            if (x == 0) Console.WriteLine();
+            Console.Write(binComb[y, x]);
+        }
     }
 
     /// <summary>
@@ -144,6 +170,4 @@ public class TulostaTotuustaulu
         for (int i = num - 1; i > 0; i--) tulos *= i;
         return tulos;
     }
-    
-    
 }

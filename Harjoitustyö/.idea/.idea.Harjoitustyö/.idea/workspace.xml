@@ -23,7 +23,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed67b64f-398d-42a7-8803-57f109f1d69a" name="Default Changelist" comment="test">
+    <list default="true" id="ed67b64f-398d-42a7-8803-57f109f1d69a" name="Default Changelist" comment="poistettu turha tiedosto">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Harjoitustyö/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Harjoitustyö/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TulostaTotuustaulu/TulostaTotuustaulu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TulostaTotuustaulu/TulostaTotuustaulu.cs" afterDir="false" />
     </list>
@@ -124,6 +124,7 @@
       <workItem from="1604843069772" duration="9747000" />
       <workItem from="1605358933570" duration="4283000" />
       <workItem from="1605372000387" duration="2706000" />
+      <workItem from="1605438606586" duration="13196000" />
     </task>
     <task id="LOCAL−00001" summary="TODO">
       <created>1604069767976</created>
@@ -161,7 +162,13 @@
       <option name="presentableId" value="LOCAL−00006" />
       <updated>1605372083575</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL−00007" summary="poistettu turha tiedosto">
+      <created>1605438661728</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1605438661728</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -182,13 +189,14 @@
     <MESSAGE value="pikku virhe korjattu" />
     <MESSAGE value="Testejä lisätty" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="poistettu turha tiedosto" />
+    <option name="LAST_COMMIT_MESSAGE" value="poistettu turha tiedosto" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="464" y="140" width="424" height="454" key="FileChooserDialogImpl" timestamp="1604318182979">
+    <state x="464" y="140" width="424" height="454" key="FileChooserDialogImpl" timestamp="1605537108298">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="464" y="140" width="424" height="454" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1604318182979" />
+    <state x="464" y="140" width="424" height="454" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1605537108298" />
     <state width="636" height="221" key="GridCell.Tab.0.bottom" timestamp="1605371524245">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -273,13 +281,13 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="556" y="132" width="800" height="500" key="Rider.ProjectTemplateDialog.Size/0.0.1366.768@0.0.1366.768" timestamp="1604935781378" />
-    <state x="281" y="133" key="Vcs.Push.Dialog.v2" timestamp="1605372090283">
+    <state x="281" y="133" key="Vcs.Push.Dialog.v2" timestamp="1605438667408">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="281" y="133" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1605372090283" />
-    <state x="497" y="316" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605372001469">
+    <state x="281" y="133" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1605438667408" />
+    <state x="497" y="316" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605438607730">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="497" y="316" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.768@0.0.1366.768" timestamp="1605372001469" />
+    <state x="497" y="316" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.768@0.0.1366.768" timestamp="1605438607730" />
   </component>
 </project>
