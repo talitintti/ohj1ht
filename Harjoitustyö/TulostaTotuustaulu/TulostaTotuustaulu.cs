@@ -3,6 +3,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using System.CodeDom;
+using System.Data;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
@@ -20,11 +21,14 @@ public class TulostaTotuustaulu
         Console.Write("Syötä lauseke tähän: ");
         string userInput = Console.ReadLine();
 
-        string formatoituLauseke = Prosessoi(userInput);
+        StringBuilder formatoituLauseke = Prosessoi(userInput);
+        Console.WriteLine(formatoituLauseke);
 
         char[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
         int[,] kombiTaulukko = BoolKombinaatiot(muuttujat);
 
+        int[] vastaukset = PalautaTulokset(kombiTaulukko, muuttujat, formatoituLauseke);
+        TulostaKombinaatiot(muuttujat, kombiTaulukko, vastaukset);
         //Console.WriteLine(formatoituLauseke);
     }
 
@@ -43,7 +47,7 @@ public class TulostaTotuustaulu
     /// </example>
     /// <param name="userInput"></param>
     /// <returns></returns>
-    public static string Prosessoi(string userInput)
+    public static StringBuilder Prosessoi(string userInput)
     {
         StringBuilder formatoitava = new StringBuilder(userInput);
 
@@ -64,14 +68,22 @@ public class TulostaTotuustaulu
             }
         }
 
+        {
+            int i = 0;
+            while (i < formatoitava.Length)
+            {
+                if (formatoitava[i] == ' ')
+                    formatoitava.Remove(i, 1);
+                else i++;
+            }
+        }
+
         TarkistaSulut(formatoitava);
 
         return formatoitava
             .Replace("NOT", "!")
             .Replace("AND", "&&")
-            .Replace("OR", "||")
-            .ToString()
-            .Trim();
+            .Replace("OR", "||");
     }
 
     public static void TarkistaSulut(StringBuilder tarkistettava)
@@ -100,22 +112,39 @@ public class TulostaTotuustaulu
     /// </summary>
     /// <param name="lauseke"></param>
     /// <returns></returns>
-    public static char[] ErotteleMuuttujat(string lauseke)
+    public static char[] ErotteleMuuttujat(StringBuilder sb)
     {
+        string lauseke = sb.ToString();
         string aakkoset = @"[a-z]";
         MatchCollection loydetut = Regex.Matches(lauseke, aakkoset);
-        char[] muuttujat = new char[loydetut.Count];
-        for (int i = 0; i < muuttujat.Length; i++) muuttujat[i] = Convert.ToChar(loydetut[i]);
-        return muuttujat;
+
+        var muuttujat = loydetut.OfType<Match>()
+            .Select(loyto => loyto.Groups[0].Value)
+            .Distinct()
+            .ToArray();
+
+        char[] muuttujatChar = new char[muuttujat.Length];
+        int i = 0;
+        foreach (string kirjain in muuttujat) muuttujatChar[i++] = Convert.ToChar(kirjain);
+
+        return muuttujatChar;
     }
 
     /// <summary>
-    /// Ottaa listan muuttujia ja palauttaa niiden kaikki kombinaatiot 
+    /// Ottaa listan muuttujia ja palauttaa niiden kaikki kombinaatiot
+    /// Tyhjän listan saadessa palautetaan {-1}
     /// </summary>
     /// <param name="lista"></param>
     /// <returns></returns>
     public static int[,] BoolKombinaatiot(char[] lista)
     {
+        if (lista.Length == 0)
+        {
+            Console.WriteLine("Tarkista antamasi muuttujat");
+            return new int[,] {{-1}};
+        }
+
+
         int dimMaara0 = Convert.ToInt16(Math.Pow(2, lista.Length));
         int[,] binComb = new int[dimMaara0, lista.Length];
 
@@ -138,36 +167,56 @@ public class TulostaTotuustaulu
 
                 n += 2;
             }
-
-            return binComb;
         }
 
-        for (int y = 0; y < binComb.GetLength(0); y++)
-        for (int x = 0; x < binComb.GetLength(1); x++)
+        return binComb;
+    }
+
+    public static void TulostaKombinaatiot(char[] muuttujat, int[,] taulukko, int[] vastaustaulukko)
+    {
+        Console.Write("====================");
+        Console.Write("\n");
+        foreach (var kirjain in muuttujat)
         {
-            if (x == 0) Console.WriteLine();
-            Console.Write(binComb[y, x]);
+            if (kirjain != muuttujat.Last()) Console.Write("{0} | ", kirjain);
+            else Console.Write(kirjain);
+        }
+
+        Console.Write("\n");
+        for (int i = 0; i < muuttujat.Length; i++) Console.Write("----");
+
+        for (int y = 0; y < taulukko.GetLength(0); y++)
+        {
+            for (int x = 0; x < taulukko.GetLength(1); x++)
+            {
+                Console.Write("{0} ", taulukko[y, x]);
+            }
+
+            Console.Write("| {0}\n", vastaustaulukko[y]);
         }
     }
 
-    /// <summary>
-    /// Antaa annetun kokonaisluvun kertoman
-    /// </summary>
-    /// <example>
-    /// <pre name="test">
-    /// Kertoma(0) === 0;
-    /// Kertoma(1) === 1;
-    /// Kertoma(2) === 2;
-    /// Kertoma(3) === 6;
-    /// Kertoma(4) === 24;
-    /// </pre>
-    /// </example>
-    /// <param name="num"></param>
-    /// <returns>Kertoman tulos</returns>
-    public static int Kertoma(int num)
+    public static int[] PalautaTulokset(int[,] eval, char[] muuttujat, StringBuilder lauseke)
     {
-        int tulos = num;
-        for (int i = num - 1; i > 0; i--) tulos *= i;
-        return tulos;
+        int[] tulokset = new int[eval.GetLength(0)];
+        /// walk right and find the first closing parenthesis
+        /// walk left and find first opening parenthesis
+        /// if var inside par == (1 or 2) evaluate and ! if ! before first open
+        ///  -- then replace the par and if there was ! also that
+        /// if var inside par > 2 then take first two and replace those two
+        ///  -- move to the next ones till no vars exist
+        for (int i = 0;
+            i < lauseke.Length;
+            i++)
+        {
+            if (lauseke[i] == ')')
+            {
+                for (int j = i; j > 0; j--)
+                    if (lauseke[j] == '(')
+                        break;
+            }
+        }
+
+        return tulokset;
     }
 }
