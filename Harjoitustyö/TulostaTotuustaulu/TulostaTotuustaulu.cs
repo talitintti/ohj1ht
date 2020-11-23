@@ -206,65 +206,68 @@ public class TulostaTotuustaulu
         /// if var inside par > 2 then take first two and replace those two
         ///  -- move to the next ones till no vars exist
         for (int vastausRiveja = 0; vastausRiveja < tulokset.Length; vastausRiveja++)
-        for (int i = 0; i < lauseke.Length; i++)
-            if (lauseke[i] == ')')
-                for (int j = i; j >= 0; j--)
-                    if (lauseke[j] == '(')
-                    {
-                        if (j - 1 >= 0 && j + 2 == i && lauseke[j - 1] == '!')
+        {
+            for (int i = 0; i < lauseke.Length; i++)
+                if (lauseke[i] == ')')
+                    for (int j = i; j >= 0; j--)
+                        if (lauseke[j] == '(')
                         {
-                            int sijoitettavaIndeksi =
-                                Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 1]);
-                            string sijoitettava;
+                            if (j - 1 >= 0 && j + 2 == i && lauseke[j - 1] == '!')
+                            {
+                                int sijoitettavaIndeksi =
+                                    Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 1]);
+                                string sijoitettava;
 
-                            if (eval[vastausRiveja, sijoitettavaIndeksi] == 0) sijoitettava = "1";
-                            else sijoitettava = "0";
+                                if (eval[vastausRiveja, sijoitettavaIndeksi] == 0) sijoitettava = "1";
+                                else sijoitettava = "0";
 
-                            lauseke.Remove(j - 1, 4).Insert(j - 1, sijoitettava);
+                                lauseke.Remove(j - 1, 4).Insert(j - 1, sijoitettava);
+
+                                i = 0;
+                                break;
+                            }
+
+                            if (lauseke[j + 2] == lauseke[i])
+                            {
+                                if (j != 0 && lauseke[j - 1] == '!') lauseke.Remove(j - 1, 2).Remove(j, 1);
+                                else lauseke.Remove(j, 1).Remove(j + 1, 1);
+
+                                i = 0;
+                                break;
+                            }
+
+                            bool[] boolMap = new[] {false, true};
+                            string operaattori = String.Concat(lauseke[j + 2], lauseke[j + 3]);
+                            bool answerBool = false;
+                            int operoitava1, operoitava2;
+
+                            var muuttujanIndeksi =
+                                Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 1]); //tee tästä funktio
+                            if (muuttujanIndeksi != -1)
+                                operoitava1 = eval[vastausRiveja, muuttujanIndeksi];
+                            else operoitava1 = Convert.ToInt16(Char.GetNumericValue(lauseke[j + 1]));
+
+                            muuttujanIndeksi =
+                                Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 4]); //tee tästä funktio
+                            if (muuttujanIndeksi != -1)
+                                operoitava2 = eval[vastausRiveja, muuttujanIndeksi];
+                            else operoitava2 = Convert.ToInt16(Char.GetNumericValue(lauseke[j + 4]));
+
+
+                            if (operaattori.Equals("&&")) answerBool = boolMap[operoitava1] && boolMap[operoitava2];
+                            if (operaattori.Equals("||")) answerBool = boolMap[operoitava1] || boolMap[operoitava2];
+
+                            char vastaavaChar;
+                            if (answerBool) vastaavaChar = '1';
+                            else vastaavaChar = '0';
+                            lauseke.Remove(j + 1, 4).Insert(j + 1, vastaavaChar);
 
                             i = 0;
-                            break;
                         }
 
-                        if (lauseke[j + 2] == lauseke[i])
-                        {
-                            if (lauseke[j - 1] == '!') lauseke.Remove(j - 1, 2).Remove(j, 1);
-                            else lauseke.Remove(j, 1).Remove(j + 1, 1);
-
-                            i = 0;
-                            break;
-                        }
-
-                        bool[] boolMap = new[] {false, true};
-                        string operaattori = String.Concat(lauseke[j + 2], lauseke[j + 3]);
-                        bool answerBool = false;
-                        int operoitava1, operoitava2;
-
-                        var muuttujanIndeksi =
-                            Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 1]); //tee tästä funktio
-                        if (muuttujanIndeksi != -1)
-                            operoitava1 = eval[vastausRiveja, muuttujanIndeksi];
-                        else operoitava1 = Convert.ToInt16(Char.GetNumericValue(lauseke[j + 1]));
-
-                        muuttujanIndeksi =
-                            Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 4]); //tee tästä funktio
-                        if (muuttujanIndeksi != -1)
-                            operoitava2 = eval[vastausRiveja, muuttujanIndeksi];
-                        else operoitava2 = Convert.ToInt16(Char.GetNumericValue(lauseke[j + 4]));
-
-
-                        if (operaattori.Equals("&&")) answerBool = boolMap[operoitava1] && boolMap[operoitava2];
-                        if (operaattori.Equals("||")) answerBool = boolMap[operoitava1] || boolMap[operoitava2];
-
-                        char vastaavaChar;
-                        if (answerBool) vastaavaChar = '1';
-                        else vastaavaChar = '0';
-                        lauseke.Remove(j + 1, 4).Insert(j + 1, vastaavaChar);
-                        //from i we replace the first var/0/1 to next var/0/1 with the appropriate value
-
-                        i = 0;
-                    }
-
+            Console.WriteLine(lauseke);
+          //tulokset[vastausRiveja] = Convert.ToInt16(Char.GetNumericValue(lauseke[0]));
+        }
 
         return tulokset;
     }
