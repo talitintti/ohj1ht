@@ -185,26 +185,23 @@ public class TulostaTotuustaulu
         Console.Write("\n");
         for (int i = 0; i < muuttujat.Length; i++) Console.Write("----");
 
+        Console.Write("\n");
         for (int y = 0; y < taulukko.GetLength(0); y++)
         {
             for (int x = 0; x < taulukko.GetLength(1); x++)
             {
-                Console.Write("{0} ", taulukko[y, x]);
+                Console.Write("{0}   ", taulukko[y, x]);
             }
 
             Console.Write("| {0}\n", vastaustaulukko[y]);
         }
     }
 
-    public static int[] PalautaTulokset(int[,] eval, char[] muuttujat, StringBuilder lauseke)
+    public static int[] PalautaTulokset(int[,] eval, char[] muuttujat, StringBuilder alkLauseke)
     {
         int[] tulokset = new int[eval.GetLength(0)];
-        /// walk right and find the first closing parenthesis
-        /// walk left and find first opening parenthesis
-        /// if var inside par == (1 or 2) evaluate and ! if ! before first open
-        ///  -- then replace the par and if there was ! also that
-        /// if var inside par > 2 then take first two and replace those two
-        ///  -- move to the next ones till no vars exist
+        StringBuilder lauseke = new StringBuilder(alkLauseke.ToString());
+
         for (int vastausRiveja = 0; vastausRiveja < tulokset.Length; vastausRiveja++)
         {
             for (int i = 0; i < lauseke.Length; i++)
@@ -216,11 +213,14 @@ public class TulostaTotuustaulu
                             {
                                 int sijoitettavaIndeksi =
                                     Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 1]);
-                                string sijoitettava;
+                                char sijoitettava;
 
-                                if (eval[vastausRiveja, sijoitettavaIndeksi] == 0) sijoitettava = "1";
-                                else sijoitettava = "0";
-
+                                if (sijoitettavaIndeksi != -1)
+                                    if (eval[vastausRiveja, sijoitettavaIndeksi] == 0)
+                                        sijoitettava = '1';
+                                    else sijoitettava = '0';
+                                else if (lauseke[j + 1] == '1') sijoitettava = '0';
+                                else sijoitettava = '1';
                                 lauseke.Remove(j - 1, 4).Insert(j - 1, sijoitettava);
 
                                 i = 0;
@@ -255,18 +255,31 @@ public class TulostaTotuustaulu
 
 
                             if (operaattori.Equals("&&")) answerBool = boolMap[operoitava1] && boolMap[operoitava2];
-                            if (operaattori.Equals("||")) answerBool = boolMap[operoitava1] || boolMap[operoitava2];
+                            else if (operaattori.Equals("||"))
+                                answerBool = boolMap[operoitava1] || boolMap[operoitava2];
 
                             char vastaavaChar;
                             if (answerBool) vastaavaChar = '1';
                             else vastaavaChar = '0';
                             lauseke.Remove(j + 1, 4).Insert(j + 1, vastaavaChar);
 
+                            
+                            if (lauseke.Length > 1 && lauseke[0] != '(' || lauseke[lauseke.Length-1] != ')')
+                            {
+                                for (int k = 1; k < lauseke.Length - 1; k++)
+                                    if (lauseke[k] == '(' || lauseke[k] == ')')
+                                        break;
+                                lauseke.Insert(0, '(').Insert(lauseke.Length - 1, ')');
+                            }
+
                             i = 0;
+                            break;
                         }
 
+
             Console.WriteLine(lauseke);
-          //tulokset[vastausRiveja] = Convert.ToInt16(Char.GetNumericValue(lauseke[0]));
+            tulokset[vastausRiveja] = Convert.ToInt16(Char.GetNumericValue(lauseke[0]));
+            lauseke.Clear().Insert(0, alkLauseke.ToString());
         }
 
         return tulokset;
