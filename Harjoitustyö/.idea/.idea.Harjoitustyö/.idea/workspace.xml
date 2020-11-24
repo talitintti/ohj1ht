@@ -23,8 +23,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed67b64f-398d-42a7-8803-57f109f1d69a" name="Default Changelist" comment="dunno">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Harjoitustyö/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Harjoitustyö/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="ed67b64f-398d-42a7-8803-57f109f1d69a" name="Default Changelist" comment="toimii!!!!!!!">
       <change beforePath="$PROJECT_DIR$/TulostaTotuustaulu/TulostaTotuustaulu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TulostaTotuustaulu/TulostaTotuustaulu.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +140,7 @@
       <workItem from="1605438606586" duration="35696000" />
       <workItem from="1605790221600" duration="2140000" />
       <workItem from="1605793075374" duration="22279000" />
-      <workItem from="1606055002339" duration="17241000" />
+      <workItem from="1606055002339" duration="18222000" />
     </task>
     <task id="LOCAL−00001" summary="TODO">
       <created>1604069767976</created>
@@ -209,7 +208,13 @@
       <option name="presentableId" value="LOCAL−00011" />
       <updated>1606146436032</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL−00012" summary="toimii!!!!!!!">
+      <created>1606242571556</created>
+      <option name="number" value="LOCAL−00012" />
+      <option name="presentableId" value="LOCAL−00012" />
+      <updated>1606242571556</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -235,7 +240,8 @@
     <MESSAGE value="80%" />
     <MESSAGE value="Itse laskentafunktio loppusuoralla" />
     <MESSAGE value="dunno" />
-    <option name="LAST_COMMIT_MESSAGE" value="dunno" />
+    <MESSAGE value="toimii!!!!!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="toimii!!!!!!!" />
   </component>
   <component name="WindowStateProjectService">
     <state x="464" y="140" width="424" height="454" key="FileChooserDialogImpl" timestamp="1606055015711">
@@ -330,10 +336,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="214" y="34" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1605790285224" />
-    <state x="281" y="133" key="Vcs.Push.Dialog.v2" timestamp="1606146441736">
+    <state x="281" y="133" key="Vcs.Push.Dialog.v2" timestamp="1606242576011">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="281" y="133" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1606146441736" />
+    <state x="281" y="133" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1606242576011" />
     <state x="497" y="316" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605438607730">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

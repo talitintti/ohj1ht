@@ -29,7 +29,6 @@ public class TulostaTotuustaulu
 
         int[] vastaukset = PalautaTulokset(kombiTaulukko, muuttujat, formatoituLauseke);
         TulostaKombinaatiot(muuttujat, kombiTaulukko, vastaukset);
-        //Console.WriteLine(formatoituLauseke);
     }
 
 
@@ -86,6 +85,10 @@ public class TulostaTotuustaulu
             .Replace("OR", "||");
     }
 
+    /// <summary>
+    /// Tarkistaa, että jokaiselle '(' on vastaava ')'
+    /// </summary>
+    /// <param name="tarkistettava">tarkistettava merkkijono</param>
     public static void TarkistaSulut(StringBuilder tarkistettava)
     {
         int montako1 = 0;
@@ -134,8 +137,8 @@ public class TulostaTotuustaulu
     /// Ottaa listan muuttujia ja palauttaa niiden kaikki kombinaatiot
     /// Tyhjän listan saadessa palautetaan {-1}
     /// </summary>
-    /// <param name="lista"></param>
-    /// <returns></returns>
+    /// <param name="lista">lista muuttujista</param>
+    /// <returns>kombinaatiot taulukossa</returns>
     public static int[,] BoolKombinaatiot(char[] lista)
     {
         if (lista.Length == 0)
@@ -172,6 +175,12 @@ public class TulostaTotuustaulu
         return binComb;
     }
 
+    /// <summary>
+    /// Tulostaa annetusta boolen algebran lausekkeesta lasketut vastaavat binääriset arvot eli totuustaulun
+    /// </summary>
+    /// <param name="muuttujat">taulukko lausekkeen muuttujista</param>
+    /// <param name="taulukko">binäärikombinaatiotaulukko</param>
+    /// <param name="vastaustaulukko">lauseketta vastaavat arvot kaikilla bin kombinaatioilla</param>
     public static void TulostaKombinaatiot(char[] muuttujat, int[,] taulukko, int[] vastaustaulukko)
     {
         Console.Write("====================");
@@ -263,8 +272,8 @@ public class TulostaTotuustaulu
                             else vastaavaChar = '0';
                             lauseke.Remove(j + 1, 4).Insert(j + 1, vastaavaChar);
 
-                            
-                            if (lauseke.Length > 1 && lauseke[0] != '(' || lauseke[lauseke.Length-1] != ')')
+
+                            if (lauseke.Length > 1 && lauseke[0] != '(' || lauseke[lauseke.Length - 1] != ')')
                             {
                                 for (int k = 1; k < lauseke.Length - 1; k++)
                                     if (lauseke[k] == '(' || lauseke[k] == ')')
@@ -276,8 +285,6 @@ public class TulostaTotuustaulu
                             break;
                         }
 
-
-            Console.WriteLine(lauseke);
             tulokset[vastausRiveja] = Convert.ToInt16(Char.GetNumericValue(lauseke[0]));
             lauseke.Clear().Insert(0, alkLauseke.ToString());
         }
