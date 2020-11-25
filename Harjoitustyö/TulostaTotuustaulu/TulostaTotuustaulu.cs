@@ -20,7 +20,7 @@ public class TulostaTotuustaulu
     {
         Console.Write("Syötä lauseke tähän: ");
         string userInput = Console.ReadLine();
-
+       
         StringBuilder formatoituLauseke = Prosessoi(userInput);
         Console.WriteLine(formatoituLauseke);
 
@@ -144,7 +144,7 @@ public class TulostaTotuustaulu
         if (lista.Length == 0)
         {
             Console.WriteLine("Tarkista antamasi muuttujat");
-            return new int[,] {{-1}};
+            return new [,] {{-1}};
         }
 
 
@@ -155,7 +155,6 @@ public class TulostaTotuustaulu
         {
             double kerroin = 1 / Math.Pow(2, x + 1);
             double kierrosVakio = kerroin * dimMaara0;
-
 
             int n = 1;
             for (double inLoop = Math.Pow(2, x); inLoop > 0; inLoop--)
@@ -177,6 +176,7 @@ public class TulostaTotuustaulu
 
     /// <summary>
     /// Tulostaa annetusta boolen algebran lausekkeesta lasketut vastaavat binääriset arvot eli totuustaulun
+    /// Jos tulosta ei voitu syystä tai toisesta laskea niin tulostaa -1 rivin vastaukseksi
     /// </summary>
     /// <param name="muuttujat">taulukko lausekkeen muuttujista</param>
     /// <param name="taulukko">binäärikombinaatiotaulukko</param>
