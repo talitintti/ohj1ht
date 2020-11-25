@@ -15,12 +15,13 @@ using System.Text.RegularExpressions;
 /// </summary>
 public class TulostaTotuustaulu
 {
+    
     //TODO: help screen
     public static void Main()
     {
         Console.Write("Syötä lauseke tähän: ");
         string userInput = Console.ReadLine();
-       
+
         StringBuilder formatoituLauseke = Prosessoi(userInput);
         Console.WriteLine(formatoituLauseke);
 
@@ -144,7 +145,7 @@ public class TulostaTotuustaulu
         if (lista.Length == 0)
         {
             Console.WriteLine("Tarkista antamasi muuttujat");
-            return new [,] {{-1}};
+            return new[,] {{-1}};
         }
 
 
@@ -214,6 +215,7 @@ public class TulostaTotuustaulu
         for (int vastausRiveja = 0; vastausRiveja < tulokset.Length; vastausRiveja++)
         {
             for (int i = 0; i < lauseke.Length; i++)
+            {
                 if (lauseke[i] == ')')
                     for (int j = i; j >= 0; j--)
                         if (lauseke[j] == '(')
@@ -272,18 +274,10 @@ public class TulostaTotuustaulu
                             else vastaavaChar = '0';
                             lauseke.Remove(j + 1, 4).Insert(j + 1, vastaavaChar);
 
-
-                            if (lauseke.Length > 1 && lauseke[0] != '(' || lauseke[lauseke.Length - 1] != ')')
-                            {
-                                for (int k = 1; k < lauseke.Length - 1; k++)
-                                    if (lauseke[k] == '(' || lauseke[k] == ')')
-                                        break;
-                                lauseke.Insert(0, '(').Insert(lauseke.Length - 1, ')');
-                            }
-
                             i = 0;
                             break;
                         }
+            }
 
             tulokset[vastausRiveja] = Convert.ToInt16(Char.GetNumericValue(lauseke[0]));
             lauseke.Clear().Insert(0, alkLauseke.ToString());
