@@ -15,23 +15,32 @@ using System.Text.RegularExpressions;
 /// </summary>
 public class TulostaTotuustaulu
 {
-    
     //TODO: help screen
     public static void Main()
     {
         Console.Write("Syötä lauseke tähän: ");
         string userInput = Console.ReadLine();
+        
+        if (!string.IsNullOrEmpty(userInput))
+        {
+            StringBuilder formatoituLauseke = Prosessoi(userInput);
+            
+            Regex sallitut = new Regex(@"[^a-z\&\!\|\(\)]");
+            MatchCollection eiSallitut = sallitut.Matches(formatoituLauseke.ToString());
+            if (eiSallitut.Count != 0)
+            {
+                Console.WriteLine("Tarkista syöttämäsi lauseke!");
+                return;
+            }
 
-        StringBuilder formatoituLauseke = Prosessoi(userInput);
-        Console.WriteLine(formatoituLauseke);
+            char[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
+            int[,] kombiTaulukko = BoolKombinaatiot(muuttujat);
 
-        char[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
-        int[,] kombiTaulukko = BoolKombinaatiot(muuttujat);
-
-        int[] vastaukset = PalautaTulokset(kombiTaulukko, muuttujat, formatoituLauseke);
-        TulostaKombinaatiot(muuttujat, kombiTaulukko, vastaukset);
+            int[] vastaukset = PalautaTulokset(kombiTaulukko, muuttujat, formatoituLauseke);
+            TulostaKombinaatiot(muuttujat, kombiTaulukko, vastaukset);
+        }
     }
-
+    
 
     /// <summary>
     /// Muuttaa käyttäjän antaman lausekkeen suoraan koodille annettavaksi lausekkeeksi
@@ -45,12 +54,13 @@ public class TulostaTotuustaulu
     /// Prosessoi("a && b !(c) NOT(c &&b)") === "a && b !(c) !(c &&b)";
     /// </pre>
     /// </example>
-    /// <param name="userInput"></param>
-    /// <returns></returns>
+    /// <param name="userInput">Käyttäjän antama lauseke</param>
+    /// <returns>Annetun lausekkeen sievästi formatoituna</returns>
     public static StringBuilder Prosessoi(string userInput)
     {
         StringBuilder formatoitava = new StringBuilder(userInput);
-
+        
+ 
         for (short i = 0; i < formatoitava.Length; i++)
         {
             switch (formatoitava[i])
@@ -65,25 +75,21 @@ public class TulostaTotuustaulu
                     formatoitava.Insert(i, '|');
                     i++;
                     break;
+                case ' ':
+                    formatoitava.Remove(i, 0);
+                    break;
             }
         }
-
-        {
-            int i = 0;
-            while (i < formatoitava.Length)
-            {
-                if (formatoitava[i] == ' ')
-                    formatoitava.Remove(i, 1);
-                else i++;
-            }
-        }
+        
+        formatoitava.Replace("NOT", "!")
+                    .Replace("AND", "&&")
+                    .Replace("OR", "||");
+        
+        
 
         TarkistaSulut(formatoitava);
 
-        return formatoitava
-            .Replace("NOT", "!")
-            .Replace("AND", "&&")
-            .Replace("OR", "||");
+        return formatoitava;
     }
 
     /// <summary>
@@ -112,17 +118,17 @@ public class TulostaTotuustaulu
     }
 
     /// <summary>
-    /// Palauttaa annetusta lausekkeesta taulukon, jossa on lausekkeen muuttujat
+    /// Annetusta lausekkeesta löydetyt muuttujat siirretään taulukkoon ja palautetaan 
     /// </summary>
-    /// <param name="lauseke"></param>
-    /// <returns></returns>
+    /// <param name="sb"></param>
+    /// <returns>Muuttujien taulukon</returns>
     public static char[] ErotteleMuuttujat(StringBuilder sb)
     {
         string lauseke = sb.ToString();
         string aakkoset = @"[a-z]";
         MatchCollection loydetut = Regex.Matches(lauseke, aakkoset);
 
-        var muuttujat = loydetut.OfType<Match>()
+        var muuttujat = loydetut
             .Select(loyto => loyto.Groups[0].Value)
             .Distinct()
             .ToArray();
@@ -207,6 +213,13 @@ public class TulostaTotuustaulu
         }
     }
 
+    /// <summary>
+    /// Laskee lausekkeen mukaiset boolen aritmeettiset operaatiot ja palauttaa vastaukset taulukossa
+    /// </summary>
+    /// <param name="eval">muuttujiin sijoitettavat binääriset arvot</param>
+    /// <param name="muuttujat">muuttujat</param>
+    /// <param name="alkLauseke">lauseke josta arvot lasketaan</param>
+    /// <returns>lausekkeesta saadut tulokset eri arvoilla</returns>
     public static int[] PalautaTulokset(int[,] eval, char[] muuttujat, StringBuilder alkLauseke)
     {
         int[] tulokset = new int[eval.GetLength(0)];
@@ -222,8 +235,7 @@ public class TulostaTotuustaulu
                         {
                             if (j - 1 >= 0 && j + 2 == i && lauseke[j - 1] == '!')
                             {
-                                int sijoitettavaIndeksi =
-                                    Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 1]);
+                                int sijoitettavaIndeksi = EtsiIndeksi(muuttujat, lauseke, j + 1);
                                 char sijoitettava;
 
                                 if (sijoitettavaIndeksi != -1)
@@ -252,14 +264,12 @@ public class TulostaTotuustaulu
                             bool answerBool = false;
                             int operoitava1, operoitava2;
 
-                            var muuttujanIndeksi =
-                                Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 1]); //tee tästä funktio
+                            var muuttujanIndeksi = EtsiIndeksi(muuttujat, lauseke, j + 1);
                             if (muuttujanIndeksi != -1)
                                 operoitava1 = eval[vastausRiveja, muuttujanIndeksi];
                             else operoitava1 = Convert.ToInt16(Char.GetNumericValue(lauseke[j + 1]));
 
-                            muuttujanIndeksi =
-                                Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j + 4]); //tee tästä funktio
+                            muuttujanIndeksi = EtsiIndeksi(muuttujat, lauseke, j + 4);
                             if (muuttujanIndeksi != -1)
                                 operoitava2 = eval[vastausRiveja, muuttujanIndeksi];
                             else operoitava2 = Convert.ToInt16(Char.GetNumericValue(lauseke[j + 4]));
@@ -284,5 +294,17 @@ public class TulostaTotuustaulu
         }
 
         return tulokset;
+    }
+
+    /// <summary>
+    /// Jos yksikään kirjain taulukosta vastaa lausekkeen annetun indeksin kohdalla olevaa kirjainta, palauta sen indeksi taulukossa. 
+    /// </summary>
+    /// <param name="muuttujat">Etsittävät kirjaimet</param>
+    /// <param name="lauseke">Mistä etsitään kirjaimet</param>
+    /// <param name="j">Lausekkeen kirjaimen indeksi</param>
+    /// <returns>Kirjaintaulukon matchaavan indeksi</returns>
+    public static int EtsiIndeksi(char[] muuttujat, StringBuilder lauseke, int j)
+    {
+        return Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j]);
     }
 }
