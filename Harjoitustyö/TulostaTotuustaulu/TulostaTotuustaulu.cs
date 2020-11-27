@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 /// @author toloojxz
-/// @version 28.10.2020
+/// @version 26.11.2020
 /// <summary>
 /// Käyttäjä syöttää haluamansa boolen sääntöjen mukaisen lausekkeen
 /// ja ohjelma tulostaa sitä vastaavan totuustaulun  
@@ -20,11 +20,11 @@ public class TulostaTotuustaulu
     {
         Console.Write("Syötä lauseke tähän: ");
         string userInput = Console.ReadLine();
-        
+
         if (!string.IsNullOrEmpty(userInput))
         {
             StringBuilder formatoituLauseke = Prosessoi(userInput);
-            
+
             Regex sallitut = new Regex(@"[^a-z\&\!\|\(\)]");
             MatchCollection eiSallitut = sallitut.Matches(formatoituLauseke.ToString());
             if (eiSallitut.Count != 0)
@@ -33,6 +33,8 @@ public class TulostaTotuustaulu
                 return;
             }
 
+            if (!TarkistaSulut(formatoituLauseke)) return;
+
             char[] muuttujat = ErotteleMuuttujat(formatoituLauseke);
             int[,] kombiTaulukko = BoolKombinaatiot(muuttujat);
 
@@ -40,7 +42,7 @@ public class TulostaTotuustaulu
             TulostaKombinaatiot(muuttujat, kombiTaulukko, vastaukset);
         }
     }
-    
+
 
     /// <summary>
     /// Muuttaa käyttäjän antaman lausekkeen suoraan koodille annettavaksi lausekkeeksi
@@ -59,8 +61,8 @@ public class TulostaTotuustaulu
     public static StringBuilder Prosessoi(string userInput)
     {
         StringBuilder formatoitava = new StringBuilder(userInput);
-        
- 
+
+
         for (short i = 0; i < formatoitava.Length; i++)
         {
             switch (formatoitava[i])
@@ -80,42 +82,93 @@ public class TulostaTotuustaulu
                     break;
             }
         }
-        
-        formatoitava.Replace("NOT", "!")
-                    .Replace("AND", "&&")
-                    .Replace("OR", "||");
-        
-        
 
-        TarkistaSulut(formatoitava);
+        formatoitava.Replace("NOT", "!")
+            .Replace("AND", "&&")
+            .Replace("OR", "||");
+
 
         return formatoitava;
     }
 
-    /// <summary>
-    /// Tarkistaa, että jokaiselle '(' on vastaava ')'
-    /// </summary>
-    /// <param name="tarkistettava">tarkistettava merkkijono</param>
-    public static void TarkistaSulut(StringBuilder tarkistettava)
-    {
-        int montako1 = 0;
-        int montako2 = 0;
-        for (int i = 0; i < tarkistettava.Length; i++)
+        /// <summary>
+        /// Tarkistaa, että jokaiselle '(' on vastaava ')'
+        /// ja lisää tarvittaessa uloimmat sulut
+        /// <example>
+        /// <pre name="test">
+        /// StringBuilder sulut = new StringBuilder("(a&&b)");
+        ///     TarkistaSulut(sulut) === true;
+        ///     sulut.ToString() === "(a&&b)";
+        /// sulut.Clear().Insert(0, "a&&b");
+        ///     TarkistaSulut(sulut) === true; 
+        ///     sulut.ToString() === "(a&&b)";
+        /// sulut.Clear().Insert(0, "(a&&b)||(a&&b)");
+        ///     TarkistaSulut(sulut) === true; 
+        ///     sulut.ToString() === "((a&&b)||(a&&b))";
+        /// sulut.Clear().Insert(0, "(a&&b||!(c)");
+        ///     TarkistaSulut(sulut) === false; 
+        ///     sulut.ToString() === "(a&&b||!(c)";
+        /// sulut.Clear().Insert(0, "a||b||!(c)");
+        ///     TarkistaSulut(sulut) === true; 
+        ///     sulut.ToString() === "(a||b||!(c))";
+        /// sulut.Clear().Insert(0, "a||!(b)||c");
+        ///     TarkistaSulut(sulut) === true; 
+        ///     sulut.ToString() === "(a||!(b)||c)";
+        /// sulut.Clear().Insert(0, "!(a)||b||c");
+        ///     TarkistaSulut(sulut) === true; 
+        ///     sulut.ToString() === "(!(a)||b||c)";
+        /// </pre>
+        /// </example>
+        /// </summary>
+        /// <param name="tarkistettava">tarkistettava merkkijono</param>
+        public static bool TarkistaSulut(StringBuilder tarkistettava)
         {
-            switch (tarkistettava[i])
+        int montako1 = 0;
+            int montako2 = 0;
+    
+            for (int i = 0; i < tarkistettava.Length; i++)
             {
-                case '(':
-                    montako1++;
-                    break;
-
-                case ')':
-                    montako2++;
-                    break;
+                switch (tarkistettava[i])
+                {
+                    case '(':
+                        montako1++;
+                        break;
+    
+                    case ')':
+                        montako2++;
+                        break;
+                }
             }
+    
+            if (montako1 != montako2) return false;
+    
+            if (montako1 == 0 && montako2 == 0 || !(tarkistettava[0] == '(' && tarkistettava[tarkistettava.Length - 1] == ')'))
+            {
+                tarkistettava.Insert(0, '(').Insert(tarkistettava.Length, ')');
+                return true;
+            }
+    
+    
+            bool onkoOk = true;
+            bool olikoNollaSulkua = true;
+            for (int i = 1; i < tarkistettava.Length - 1; i++)
+                if (tarkistettava[i] == ')')
+                {
+                    olikoNollaSulkua = false;
+                    for (int j = i; j > 0; j--)
+                    {
+                        if (tarkistettava[j] == '(') break;
+                        if (j == 1) onkoOk = false;
+                    }
+    
+                    if (onkoOk == false) break;
+                }
+    
+            if (!onkoOk && !olikoNollaSulkua)
+                tarkistettava.Insert(0, '(').Insert(tarkistettava.Length - 1, ')');
+    
+            return true;
         }
-
-        if (montako1 != montako2) Console.WriteLine("Tarkista sulut!");
-    }
 
     /// <summary>
     /// Annetusta lausekkeesta löydetyt muuttujat siirretään taulukkoon ja palautetaan 
