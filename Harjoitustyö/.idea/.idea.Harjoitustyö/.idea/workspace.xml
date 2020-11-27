@@ -23,7 +23,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed67b64f-398d-42a7-8803-57f109f1d69a" name="Default Changelist" comment="Paranneltu käyttäytymistä erikoistapauksissa">
+    <list default="true" id="ed67b64f-398d-42a7-8803-57f109f1d69a" name="Default Changelist" comment="Pieniä parannuksia aliohjelmiin">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Harjoitustyö/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Harjoitustyö/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TulostaTotuustaulu/TulostaTotuustaulu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TulostaTotuustaulu/TulostaTotuustaulu.cs" afterDir="false" />
     </list>
@@ -141,7 +141,7 @@
       <workItem from="1605438606586" duration="35696000" />
       <workItem from="1605790221600" duration="2140000" />
       <workItem from="1605793075374" duration="22279000" />
-      <workItem from="1606055002339" duration="50725000" />
+      <workItem from="1606055002339" duration="51738000" />
     </task>
     <task id="LOCAL−00001" summary="TODO">
       <created>1604069767976</created>
@@ -239,7 +239,13 @@
       <option name="presentableId" value="LOCAL−00016" />
       <updated>1606395072592</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL−00017" summary="Pieniä parannuksia aliohjelmiin">
+      <created>1606503123068</created>
+      <option name="number" value="LOCAL−00017" />
+      <option name="presentableId" value="LOCAL−00017" />
+      <updated>1606503123068</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -270,7 +276,8 @@
     <MESSAGE value="&#10;pieniä parannuksia" />
     <MESSAGE value="&#10;&#10;poistettu turha kohta" />
     <MESSAGE value="Paranneltu käyttäytymistä erikoistapauksissa" />
-    <option name="LAST_COMMIT_MESSAGE" value="Paranneltu käyttäytymistä erikoistapauksissa" />
+    <MESSAGE value="Pieniä parannuksia aliohjelmiin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pieniä parannuksia aliohjelmiin" />
   </component>
   <component name="WindowStateProjectService">
     <state x="464" y="140" width="424" height="454" key="FileChooserDialogImpl" timestamp="1606392528787">
@@ -369,10 +376,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="716" y="12" width="634" height="740" key="VCS.FileHistoryDialog/0.0.1366.768@0.0.1366.768" timestamp="1606387337306" />
-    <state x="281" y="133" key="Vcs.Push.Dialog.v2" timestamp="1606395076131">
+    <state x="281" y="133" key="Vcs.Push.Dialog.v2" timestamp="1606503127265">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="281" y="133" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1606395076131" />
+    <state x="281" y="133" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1606503127265" />
     <state x="497" y="316" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606387473119">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

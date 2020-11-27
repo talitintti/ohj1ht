@@ -49,11 +49,12 @@ public class TulostaTotuustaulu
     /// </summary>
     /// <example>
     /// <pre name="test">
-    /// Prosessoi("a && b") === "a && b";
-    /// Prosessoi("a || b") === "a || b";
-    /// Prosessoi("a & b") === "a && b";
-    /// Prosessoi("a | b") === "a || b";
-    /// Prosessoi("a && b !(c) NOT(c &&b)") === "a && b !(c) !(c &&b)";
+    /// Prosessoi("a && b") === "a&&b";
+    /// Prosessoi("a || b") === "a||b";
+    /// Prosessoi("a & b") === "a&&b";
+    /// Prosessoi("a | b") === "a||b";
+    /// Prosessoi("a && b !(c) NOT(c &&b)") === "a&&b!(c)!(c&&b)";
+    /// Prosessoi("b AND a | NOT(b) OR d") === "b&&a||!(b)||d";
     /// </pre>
     /// </example>
     /// <param name="userInput">Käyttäjän antama lauseke</param>
@@ -70,15 +71,14 @@ public class TulostaTotuustaulu
                 case '&':
                     if (formatoitava[i] == formatoitava[++i]) break;
                     formatoitava.Insert(i, '&');
-                    i++;
                     break;
                 case '|':
                     if (formatoitava[i] == formatoitava[++i]) break;
                     formatoitava.Insert(i, '|');
-                    i++;
                     break;
                 case ' ':
                     formatoitava.Remove(i, 0);
+                    i--;
                     break;
             }
         }
