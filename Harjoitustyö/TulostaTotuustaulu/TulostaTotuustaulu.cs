@@ -77,7 +77,7 @@ public class TulostaTotuustaulu
                     formatoitava.Insert(i, '|');
                     break;
                 case ' ':
-                    formatoitava.Remove(i, 0);
+                    formatoitava.Remove(i, 1);
                     i--;
                     break;
             }
