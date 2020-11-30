@@ -51,7 +51,8 @@ public class TulostaTotuustaulu
         Console.WriteLine("-----------------------------------------------------------------");
         Console.WriteLine("Käyttäjä syöttää haluamansa boolen sääntöjen mukaisen lausekkeen");
         Console.WriteLine("ja ohjelma tulostaa sitä vastaavan totuustaulun.");
-        Console.WriteLine("Kun käyttäjän syöte ei noudata järkevää notaatiota niin ohjelma sulkeutuu ja tulostaa tämän ilmoituksen");
+        Console.WriteLine(
+            "Kun käyttäjän syöte ei noudata järkevää notaatiota niin ohjelma sulkeutuu ja tulostaa tämän ilmoituksen");
         Console.WriteLine("-----------------------------------------------------------------");
         Console.WriteLine("1. Operaattorien ja muuttujien oltava järjestyksessä. Väärin on esim |ab");
         Console.WriteLine("2. Muuttujien on pienet kirjaimet välillä [a-z]");
@@ -89,6 +90,7 @@ public class TulostaTotuustaulu
             if (eiSallitut.Count != 0 || muuttujia.Count == 0) return false;
         }
         else return false;
+
         return true;
     }
 
