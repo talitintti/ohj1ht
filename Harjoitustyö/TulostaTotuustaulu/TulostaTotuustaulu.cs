@@ -44,6 +44,7 @@ public class TulostaTotuustaulu
         }
         else PrintHelp();
     }
+    
 
     public static void PrintHelp()
     {
@@ -59,6 +60,7 @@ public class TulostaTotuustaulu
         Console.WriteLine("3. Operaattorit voivat olla |/||/OR, &/&&/AND, !()/NOT() huom isolla kirjoitetut!");
         Console.WriteLine("4. Laskutoimituksessa on oltava vähintään yksi operaattori");
     }
+    
 
     /// <summary>
     /// Varmistaa, että
@@ -94,6 +96,7 @@ public class TulostaTotuustaulu
         return true;
     }
 
+    
     /// <summary>
     /// Muuttaa käyttäjän antaman lausekkeen suoraan koodille annettavaksi lausekkeeksi
     /// & --> && jne
@@ -144,6 +147,7 @@ public class TulostaTotuustaulu
 
         return formatoitava;
     }
+    
 
     /// <summary>
     /// Tarkistaa, että jokaiselle '(' on vastaava ')'
@@ -224,6 +228,7 @@ public class TulostaTotuustaulu
 
         return true;
     }
+    
 
     /// <summary>
     /// Annetusta lausekkeesta löydetyt muuttujat siirretään taulukkoon ja palautetaan 
@@ -247,6 +252,7 @@ public class TulostaTotuustaulu
 
         return muuttujatChar;
     }
+    
 
     /// <summary>
     /// Ottaa listan muuttujia ja palauttaa niiden kaikki kombinaatiot
@@ -288,6 +294,7 @@ public class TulostaTotuustaulu
 
         return binComb;
     }
+    
 
     /// <summary>
     /// Tulostaa annetusta boolen algebran lausekkeesta lasketut vastaavat binääriset arvot eli totuustaulun
@@ -321,6 +328,7 @@ public class TulostaTotuustaulu
         }
     }
 
+    
     /// <summary>
     /// Laskee lausekkeen mukaiset boolen aritmeettiset operaatiot ja palauttaa vastaukset taulukossa
     /// </summary>
@@ -403,6 +411,7 @@ public class TulostaTotuustaulu
 
         return tulokset;
     }
+    
 
     /// <summary>
     /// Jos yksikään kirjain taulukosta vastaa lausekkeen annetun indeksin kohdalla olevaa kirjainta, palauta sen indeksi taulukossa. 
@@ -415,4 +424,5 @@ public class TulostaTotuustaulu
     {
         return Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j]);
     }
+    
 }
