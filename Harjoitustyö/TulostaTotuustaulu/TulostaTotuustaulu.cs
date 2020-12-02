@@ -46,14 +46,17 @@ public class TulostaTotuustaulu
     }
     
 
+    /// <summary>
+    /// Tulostaa help -ilmoituksen, jossa kerrotaan kuinka ohjelmaa tulisi käyttää
+    /// ja miten ohjelma reagoi
+    /// </summary>
     public static void PrintHelp()
     {
         Console.WriteLine("Argumentilla {0} saa tulostettua tämän näkymän", "--help");
         Console.WriteLine("-----------------------------------------------------------------");
         Console.WriteLine("Käyttäjä syöttää haluamansa boolen sääntöjen mukaisen lausekkeen");
         Console.WriteLine("ja ohjelma tulostaa sitä vastaavan totuustaulun.");
-        Console.WriteLine(
-            "Kun käyttäjän syöte ei noudata järkevää notaatiota niin ohjelma sulkeutuu ja tulostaa tämän ilmoituksen");
+        Console.WriteLine("Kun käyttäjän syöte ei noudata järkevää notaatiota niin ohjelma sulkeutuu ja tulostaa tämän ilmoituksen");
         Console.WriteLine("-----------------------------------------------------------------");
         Console.WriteLine("1. Operaattorien ja muuttujien oltava järjestyksessä. Väärin on esim |ab");
         Console.WriteLine("2. Muuttujien on pienet kirjaimet välillä [a-z]");
