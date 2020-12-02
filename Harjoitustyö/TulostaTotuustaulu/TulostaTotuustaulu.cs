@@ -70,9 +70,9 @@ public class TulostaTotuustaulu
     /// </summary>
     /// <example>
     /// <pre name="test">
-    /// LausekkeenTarkistus(new StringBuilder("abcdefghijklmnopqrstuvxywz")) === true;
+    /// LausekkeenTarkistus(new StringBuilder("abcdefghijklmnopqrstuvxywz")) === false;
     /// LausekkeenTarkistus(new StringBuilder("1569anc")) === false;
-    /// LausekkeenTarkistus(new StringBuilder("()!||&&")) === true;
+    /// LausekkeenTarkistus(new StringBuilder("()!||&&")) === false;
     /// LausekkeenTarkistus(new StringBuilder("ABD")) === false;
     /// LausekkeenTarkistus(new StringBuilder("||")) === false;
     /// LausekkeenTarkistus(new StringBuilder("a||b")) === true;
