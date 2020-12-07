@@ -105,7 +105,7 @@ public class TulostaTotuustaulu
             Regex operaattoriMatch = new Regex(@"\&\&|\|\|");
             MatchCollection operaattorienMaara = onkoMuuttujia.Matches(formatoituLauseke);
 
-            if (eiSallitut.Count != 0 || muuttujia.Count == 0 ) return false;
+            if (eiSallitut.Count != 0 || muuttujia.Count == 0) return false;
             if (muuttujia.Count != 1)
                 if (muuttujia.Count - 1 != operaattorienMaara.Count)
                     return false;
