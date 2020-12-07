@@ -51,7 +51,7 @@ public class TulostaTotuustaulu
         }
         else PrintHelp();
     }
-    
+
 
     /// <summary>
     /// Tulostaa help -ilmoituksen, jossa kerrotaan kuinka ohjelmaa tulisi käyttää
@@ -63,19 +63,22 @@ public class TulostaTotuustaulu
         Console.WriteLine("-----------------------------------------------------------------");
         Console.WriteLine("Käyttäjä syöttää haluamansa boolen sääntöjen mukaisen lausekkeen");
         Console.WriteLine("ja ohjelma tulostaa sitä vastaavan totuustaulun.");
-        Console.WriteLine("Kun käyttäjän syöte ei noudata järkevää notaatiota niin ohjelma sulkeutuu ja tulostaa tämän ilmoituksen");
+        Console.WriteLine(
+            "Kun käyttäjän syöte ei noudata järkevää notaatiota niin ohjelma sulkeutuu ja tulostaa tämän ilmoituksen");
         Console.WriteLine("-----------------------------------------------------------------");
         Console.WriteLine("1. Operaattorien ja muuttujien oltava järjestyksessä. Väärin on esim |ab");
         Console.WriteLine("2. Muuttujien on pienet kirjaimet välillä [a-z]");
         Console.WriteLine("3. Operaattorit voivat olla |/||/OR, &/&&/AND, !()/NOT() huom isolla kirjoitetut!");
         Console.WriteLine("4. Laskutoimituksessa on oltava vähintään yksi operaattori");
     }
-    
+
 
     /// <summary>
     /// Varmistaa, että
     /// 1. Lausekkeessa on ainakin yksi muuttuja
     /// 2. Lausekkeessa on vain kirjaimia [a-z] & ! | ()
+    /// 3. Lausekkeen jokaisen muuttujan perässä on operaattori ellei kyseessä ole
+    /// yhden muuttujan lauseke (esim !(c)) tai lausekkeen viimeinen muuttuja
     /// Virheen huomatessa palautetaan false ja jos kaikki on hyvin niin true
     /// </summary>
     /// <example>
@@ -99,14 +102,20 @@ public class TulostaTotuustaulu
             MatchCollection muuttujia = onkoMuuttujia.Matches(formatoituLauseke);
             Regex sallitut = new Regex(@"[^a-z\&\!\|\(\)]");
             MatchCollection eiSallitut = sallitut.Matches(formatoituLauseke);
-            if (eiSallitut.Count != 0 || muuttujia.Count == 0) return false;
+            Regex operaattoriMatch = new Regex(@"\&\&|\|\|");
+            MatchCollection operaattorienMaara = onkoMuuttujia.Matches(formatoituLauseke);
+
+            if (eiSallitut.Count != 0 || muuttujia.Count == 0 ) return false;
+            if (muuttujia.Count != 1)
+                if (muuttujia.Count - 1 != operaattorienMaara.Count)
+                    return false;
         }
         else return false;
 
         return true;
     }
 
-    
+
     /// <summary>
     /// Muuttaa käyttäjän antaman lausekkeen suoraan koodille annettavaksi lausekkeeksi
     /// & --> && jne
@@ -157,7 +166,7 @@ public class TulostaTotuustaulu
 
         return formatoitava;
     }
-    
+
 
     /// <summary>
     /// Tarkistaa, että jokaiselle '(' on vastaava ')'
@@ -238,7 +247,7 @@ public class TulostaTotuustaulu
 
         return true;
     }
-    
+
 
     /// <summary>
     /// Annetusta lausekkeesta löydetyt muuttujat siirretään taulukkoon ja palautetaan 
@@ -262,7 +271,7 @@ public class TulostaTotuustaulu
 
         return muuttujatChar;
     }
-    
+
 
     /// <summary>
     /// Ottaa listan muuttujia ja palauttaa niiden kaikki kombinaatiot
@@ -304,7 +313,7 @@ public class TulostaTotuustaulu
 
         return binComb;
     }
-    
+
 
     /// <summary>
     /// Tulostaa annetusta boolen algebran lausekkeesta lasketut vastaavat binääriset arvot eli totuustaulun
@@ -338,7 +347,7 @@ public class TulostaTotuustaulu
         }
     }
 
-    
+
     /// <summary>
     /// Laskee lausekkeen mukaiset boolen aritmeettiset operaatiot ja palauttaa vastaukset taulukossa
     /// </summary>
@@ -421,7 +430,7 @@ public class TulostaTotuustaulu
 
         return tulokset;
     }
-    
+
 
     /// <summary>
     /// Jos yksikään kirjain taulukosta vastaa lausekkeen annetun indeksin kohdalla olevaa kirjainta, palauta sen indeksi taulukossa. 
@@ -434,5 +443,4 @@ public class TulostaTotuustaulu
     {
         return Array.FindIndex(muuttujat, muuttuja => muuttuja == lauseke[j]);
     }
-    
 }
