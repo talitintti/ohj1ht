@@ -24,7 +24,14 @@ public class TulostaTotuustaulu
 {
     public static void Main(string[] args)
     {
-        if (args.Length != 0 && args[0] == "--help") PrintHelp();
+        if (args.Length != 0)
+            foreach (var argument in args)
+                if (!string.IsNullOrWhiteSpace(argument) && argument == "--help")
+                {
+                    PrintHelp();
+                    return;
+                }
+
 
         Console.Write("Syötä lauseke tähän: ");
         string userInput = Console.ReadLine();
