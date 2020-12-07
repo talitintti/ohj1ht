@@ -103,7 +103,7 @@ public class TulostaTotuustaulu
             Regex sallitut = new Regex(@"[^a-z\&\!\|\(\)]");
             MatchCollection eiSallitut = sallitut.Matches(formatoituLauseke);
             Regex operaattoriMatch = new Regex(@"\&\&|\|\|");
-            MatchCollection operaattorienMaara = onkoMuuttujia.Matches(formatoituLauseke);
+            MatchCollection operaattorienMaara = operaattoriMatch.Matches(formatoituLauseke);
 
             if (eiSallitut.Count != 0 || muuttujia.Count == 0) return false;
             if (muuttujia.Count != 1)
